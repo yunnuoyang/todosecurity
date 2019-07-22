@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd">
+    <security:http>
+        <!-- 授权第一个可供访问的页面 access="permitAll()"可以匿名访问的url-->
+        <security:intercept-url pattern="/userLogin" access="permitAll()"/>
+        <!--<security:intercept-url pattern="/userLogin" access="hasAuthority('admin')"/>-->
+        <security:intercept-url pattern="/index" access="permitAll()"/>
+        <security:intercept-url pattern="/toshow" access="hasAuthority('admin')"/>
+        <security:intercept-url pattern="/toplay" access="hasAuthority('reader')"/>
+
+        <security:intercept-url pattern="/main" access="isFullyAuthenticated()"/>
+
+        <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
+        <!-- 配置默认的访问的页面的url login-page="user/userLogin"-->
+        <!--配置处理登陆请求的url login-processing-url="user/dologin" -->
+        <!--同步登陆方式的处理authentication-failure-forward-url="/failer"-->
+        <security:form-login
+                login-page="/userLogin"
+                password-parameter="password" username-parameter="username"
+                authentication-success-forward-url="/main"
+
+        /><!--authentication-failure-forward-url="/index"-->
+        <!-- 跨站请求，将此设置为true则可以进行正常的登陆操作，不要粗心大意-->
+        <security:csrf disabled="true"/>
+        <!--设置默认的拒绝访问请求的url-->
+        <!--<security:access-denied-handler error-page="/failer"/>-->
+
+    </security:http>
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="userService">
+            <security:password-encoder ref="encoder"/>
+            <!--<security:user-service >-->
+                <!--&lt;!&ndash;<security:user name="admin" authorities="admin" password="{noop}123"></security:user>&ndash;&gt;-->
+
+            <!--</security:user-service>-->
+
+        </security:authentication-provider>
+
+    </security:authentication-manager>
+    <!--authentication-success-handler-ref="myAuthenticationHandler" 自定义handler进行验证-->
+    <!--<bean class="com.codefacker.filter.MyAuthenticationHandler" id="myAuthenticationHandler"></bean>-->
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
