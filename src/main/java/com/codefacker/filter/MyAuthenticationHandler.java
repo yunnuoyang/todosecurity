@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class MyAuthenticationHandler implements AuthenticationSuccessHandler {
     @Autowired
     private ObjectMapper objectMapper;
+//    RememberMeAuthenticationFilter
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
             //返回json数据

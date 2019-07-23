@@ -30,7 +30,8 @@
         <security:csrf disabled="true"/>
         <!--设置默认的拒绝访问请求的url-->
         <!--<security:access-denied-handler error-page="/failer"/>-->
-
+        <!-- 设置token的有效时间-->
+        <security:remember-me token-repository-ref="jdbcTokenRepository" token-validity-seconds="1000"></security:remember-me>
     </security:http>
     <security:authentication-manager>
         <security:authentication-provider user-service-ref="userService">
@@ -45,6 +46,11 @@
     </security:authentication-manager>
     <!--authentication-success-handler-ref="myAuthenticationHandler" 自定义handler进行验证-->
     <!--<bean class="com.codefacker.filter.MyAuthenticationHandler" id="myAuthenticationHandler"></bean>-->
+    <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="createTableOnStartup" value="true"/>
+        <!-- 记住我的配置，会在数据库创建一个表用来存储rememberme的信息-->
+    </bean>
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 </beans>
 

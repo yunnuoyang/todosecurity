@@ -18,12 +18,12 @@ import java.util.List;
 @Service("userService")
 public class MyUserDetailService implements UserDetailsService {
 //    PasswordEncoder
+//    DateUtils
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        //
         User user = userRepository.findByUserName(s);
         System.out.println(".........................." + user);
         System.out.println("..........................");
