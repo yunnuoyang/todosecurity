@@ -48,7 +48,7 @@
     <!--<bean class="com.codefacker.filter.MyAuthenticationHandler" id="myAuthenticationHandler"></bean>-->
     <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
         <property name="dataSource" ref="dataSource"/>
-        <property name="createTableOnStartup" value="true"/>
+        <property name="createTableOnStartup" value="false"/>
         <!-- 记住我的配置，会在数据库创建一个表用来存储rememberme的信息-->
     </bean>
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
